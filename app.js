@@ -1,107 +1,123 @@
 const express = require('express')
 const fs = require('fs')
-const path = require('path');
-const app = express()
 const session = require('express-session');
-const port = process.env.PORT ?? 3000;
+const handlebars = require('express-handlebars');
+const functions = require('./functions');
 var bodyParser = require('body-parser');
 
-app.engine('.html', require('ejs').__express);
+const app = express()
+const port = process.env.PORT ?? 3000;
 
-// Support body for post
+//Sets our app to use the handlebars engine
+app.set('view engine', 'hbs');
+
+//Sets handlebars configurations
+app.engine('hbs', handlebars.engine({
+    layoutsDir: __dirname + '/views/layouts',
+    extname: 'hbs',
+    defaultLayout: 'default',
+    partialsDir: __dirname + '/views/partials/'
+}));
+
+app.use(express.static('public'))
+
+// Support req.body for post requests
 app.use(bodyParser.json());       
 app.use(bodyParser.urlencoded({extended: true})); 
 
 // Create sessions for user logins
-app.use(session({secret:'Secret Value', name: Date.now().toString(16), resave: false, saveUninitialized:false}))
-app.use(function(req, res, next) {res.locals.errorMsg = {}; next();}) 
-
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret:'Secret Value', name: Date.now().toString(16), cookie: {maxAge: 60000}, resave: false, saveUninitialized:false}))
 
 // Redirect to main page
 app.get('/', (req, res) => {
     if (req.session.loggedin) {
-        res.redirect(`home`)
+        res.redirect(`dashboard`)
     } else {
         res.redirect(`login`);
     }
 
 })
 app.get('/login', (req, res) => {
-    res.render(path.join(__dirname, `views/login.ejs`));
-})
-// Render specific page
-app.get('/:path', (req, res) => {
-    // idk, hardcode to bypass an error
-    if (req.params.path == 'favicon.ico') return res.end();
-    // if not logged in yet, redirect to login screen
-    if (!req.session.loggedin && req.params.path != 'registration') return res.redirect(`login`);
-
-    const Users = JSON.parse(fs.readFileSync(`./localDB/users.json`));
-    let user = Users[req?.session?.username];
-    res.render(path.join(__dirname, `views/${req.params.path}.ejs`), {userReadList: user?.readList});
+    res.render('login');
 })
 
-app.post('/:path', (req, res) => {
-    switch (req.params.path.toLowerCase()) {
-        case "login": {
-            // TODO, make look nicer
-            const Users = JSON.parse(fs.readFileSync(`./localDB/users.json`))
-            let {username, password} = req.body;
+app.get('/dashboard', (req, res) => {
+    // Ensure user logged in
+    if (!req.session.loggedin) {
+        return res.redirect('login')
+    }
 
-            // Ensure no empty field
-            if (!username || !password) return res.status(200).render(path.join(__dirname, `views/login.ejs`), {errorMsg: {message:`Please enter both the username and password.`}})
-
-            // User does not exist
-            if (!Users[username]) return res.status(200).render(path.join(__dirname, `views/login.ejs`), {errorMsg: {message:`User ${username} does not exist.`}})
-
-            if (Users[username]?.password != password) {
-                return res.status(200).render(path.join(__dirname, `views/login.ejs`), {errorMsg: {message:`Incorrect password!`}})
-            } else {
-                // Log in
-                req.session.loggedin = true;
-                req.session.username = username;
-                res.redirect(`home`)
-                return
-            }
+    // Dynamically change template based on user type
+    let template;
+    switch (req.session.userType) {
+        case "client": {
+            template = 'clientDash'
+            break;
         }
-        case "register": {
-            const Users = JSON.parse(fs.readFileSync(`./localDB/users.json`))
-            let {username, password} = req.body;
-            
-            // Ensure no empty field
-            if (!username || !password) return res.status(200).render(path.join(__dirname, `views/registration.ejs`), {errorMsg: {message:`Please enter both the username and password.`}})
-
-            // User already exists
-            if (Users[username]) return res.status(200).render(path.join(__dirname, `views/registration.ejs`), {errorMsg: {message:`Username ${username} already taken!`}})
-
-            // Add user to DB
-            Users[username] = {
-                password: password,
-                createdOn: Date.now(),
-                readList: []
-            }
-            fs.writeFile(`./localDB/users.json`, JSON.stringify(Users), 'utf8', (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).end();
-                } else {
-                    console.log(`Registered user: ${username}`)
-                }
-            })
-
-            res.redirect(`login`)
-            return
+        case "banker": {
+            template = 'bankerDash'
+            break;
+        }
+        case "admin": {
+            template = 'adminDash'
+            break
         }
         default: {
-            res.status(404).send(`POST Request Called ${req.params.path}`);
-            console.log(req.body.params)
+
+        }
+    }
+
+
+    res.render('dashboard', {layout: template ?? 'clientDash', username: req.session.username})
+})
+
+// Render other pages
+app.get('/:path', (req, res) => {
+    // Ensure user logged in
+    if (req.params.path != "registration" && !req.session.loggedin) {
+        return res.redirect('login')
+    }
+    if (req.params.path == "favicon.ico") return res.end();
+    res.render(req.params.path);
+})
+
+// Post methods for all pages
+app.post('/:path', (req, res) => {
+    // Switch on all cases of path of post
+    switch(req.params.path) {
+        case "register": {
+            try {
+                functions.addUser(req.body?.username, req.body?.password);
+            } catch (error) {
+                return res.send(error.message)
+            }
+
+            return res.redirect('login');
+        }
+        case "login": {
+            let userInfo;
+            try {
+                userInfo = functions.loginUser(req.body?.username, req.body?.password);
+            } catch (error) {
+                return res.send(error.message)
+            }
+
+            if (userInfo == undefined) {
+                return res.send('Technical Error, Try again later.')
+            }
+
+            // Attach username and type to the session
+            req.session.loggedin = true;
+            req.session.username = userInfo.username;
+            req.session.userType = userInfo.userType;
+
+            return res.redirect('dashboard');
+        }
+        default: {
+            return res.send(`Error trying to POST ${req.params.path}`);
         }
     }
 })
-
-
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

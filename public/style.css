@@ -1,0 +1,83 @@
+button {
+    border-radius: 14px;
+    padding: 14px 40px;
+    font-size: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+input {
+    border-radius: 4px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid rebeccapurple;
+}
+
+input:focus {
+    border: 2px solid grey;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(86, 86, 86);
+    opacity: 1; /* Firefox */
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(86, 86, 86);
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(86, 86, 86);
+}
+
+.buttonLogin {
+    transition-duration: 0.6s;
+    padding: 14px 40px;
+    color: rgb(41, 41, 41);
+}
+
+.buttonLogin:hover {
+    border-radius: 10px;
+}
+
+.contForm {
+    margin-top: 10%;
+    width: min-content;
+    border-radius: 14px;
+    padding: 12px 30px;
+    background-color: #ddd;
+    border: 4px rebeccapurple;
+}
+
+/* The navigation bar */
+.navbar {
+    overflow: hidden;
+    background-color: rebeccapurple;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+}
+  
+/* Links inside the navbar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+/* Change background on mouse-over */
+.navbar a:hover {
+    background: #ddd;
+    color: black;
+}
+
+.mainContent {
+    margin-top: 60px; /* Add a top margin to avoid content overlay */
+}
