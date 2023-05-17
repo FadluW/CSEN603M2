@@ -48,27 +48,27 @@ app.get('/dashboard', (req, res) => {
     }
 
     // Dynamically change template based on user type
-    let template;
+    let renderOptions = {layout: 'clientDash', username: req.session.username};
     switch (req.session.userType) {
         case "client": {
-            template = 'clientDash'
+            renderOptions.layout = 'clientDash'
+            renderOptions.accountsArr = functions.getAccounts(req.session.username)
             break;
         }
         case "banker": {
-            template = 'bankerDash'
+            renderOptions.layout = 'bankerDash'
             break;
         }
         case "admin": {
-            template = 'adminDash'
-            break
+            renderOptions.layout = 'adminDash'
+            break;
         }
         default: {
 
         }
     }
-
-
-    res.render('dashboard', {layout: template ?? 'clientDash', username: req.session.username})
+    
+    res.render('dashboard', renderOptions)
 })
 
 // Render other pages

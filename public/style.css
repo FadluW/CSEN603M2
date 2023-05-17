@@ -6,17 +6,15 @@ body {
     margin: 0px;
 }
 
-button {
-    border-radius: 14px;
-    padding: 14px 40px;
-    font-size: 20px;
-    text-align: center;
-    display: inline-block;
+table {
+    border-collapse: collapse;
+    width: 100%
 }
 
 input {
     border-radius: 4px;
-    margin: 8px 0;
+    font-size: 18px;
+    margin: 4px 0;
     box-sizing: border-box;
     border: 2px solid rebeccapurple;
 }
@@ -42,14 +40,33 @@ input:focus::placeholder {
     color: rgb(86, 86, 86);
 }
 
+
+button {
+    border-radius: 14px;
+    padding: 14px 40px;
+    font-size: 14px;
+    text-align: center;
+    display: inline-block;
+}
+
 .buttonLogin {
     transition-duration: 0.6s;
     padding: 14px 40px;
-    color: rgb(41, 41, 41);
+    background-color: rebeccapurple;
+    color: #ddd;
 }
 
 .buttonLogin:hover {
     border-radius: 10px;
+}
+
+.cont {
+    margin-top: 5%;
+    width: 95%;
+    border-radius: 14px;
+    background-color: #ddd;
+    padding: 12px 30px;
+    border: 2px solid rebeccapurple;
 }
 
 .contForm {
@@ -58,7 +75,7 @@ input:focus::placeholder {
     border-radius: 14px;
     padding: 12px 30px;
     background-color: #ddd;
-    border: 4px rebeccapurple;
+    border: 2px solid rebeccapurple;
 }
 
 /* The navigation bar */
