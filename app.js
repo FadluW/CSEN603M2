@@ -113,6 +113,16 @@ app.post('/:path', (req, res) => {
 
             return res.redirect('dashboard');
         }
+        case "adminAddAccount": {
+            try {
+                functions.addAccount(req.body?.username, 'EGP', req.body?.accID)
+            } catch (error) {
+                return res.send(error.message)
+            }
+
+            // TODO: make better redirect
+            return res.redirect('dashboard')
+        }
         default: {
             return res.send(`Error trying to POST ${req.params.path}`);
         }
