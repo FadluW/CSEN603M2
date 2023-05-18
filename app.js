@@ -31,9 +31,9 @@ app.use(session({secret:'Secret Value', name: Date.now().toString(16), cookie: {
 // Redirect to main page
 app.get('/', (req, res) => {
     if (req.session.loggedin) {
-        res.redirect(`dashboard`)
+        res.redirect(`/dashboard`)
     } else {
-        res.redirect(`login`);
+        res.redirect(`/login`);
     }
 
 })
@@ -61,6 +61,7 @@ app.get('/dashboard', (req, res) => {
         }
         case "admin": {
             renderOptions.layout = 'adminDash'
+            return res.render('dashboardAdmin', renderOptions);
             break;
         }
         default: {
@@ -69,6 +70,33 @@ app.get('/dashboard', (req, res) => {
     }
     
     res.render('dashboard', renderOptions)
+})
+
+app.get('/accounts/:username', (req, res) => {
+    // Ensure user logged in
+    if (!req.session.loggedin) {
+        return res.redirect('/login')
+    }
+    // Dynamically change template based on user type
+    let renderOptions = {accountsArr: functions.getAccounts(req.params.username)};
+    switch (req.session.userType) {
+        case "client": {
+            return res.redirect('dashboard')
+        }
+        case "banker": {
+            renderOptions.layout = 'bankerDash'
+            break;
+        }
+        case "admin": {
+            renderOptions.layout = 'adminDash'
+            break;
+        }
+        default: {
+
+        }
+    }
+
+    res.render('accounts', renderOptions)
 })
 
 // Render other pages
@@ -92,7 +120,7 @@ app.post('/:path', (req, res) => {
                 return res.send(error.message)
             }
 
-            return res.redirect('login');
+            return res.redirect('/login');
         }
         case "login": {
             let userInfo;
@@ -111,7 +139,7 @@ app.post('/:path', (req, res) => {
             req.session.username = userInfo.username;
             req.session.userType = userInfo.userType;
 
-            return res.redirect('dashboard');
+            return res.redirect('/dashboard');
         }
         case "adminAddAccount": {
             try {
@@ -121,7 +149,10 @@ app.post('/:path', (req, res) => {
             }
 
             // TODO: make better redirect
-            return res.redirect('dashboard')
+            return res.redirect('/dashboard')
+        }
+        case "adminViewAccounts": {
+            return res.redirect(`/accounts/${req.body.accUsername}`)
         }
         default: {
             return res.send(`Error trying to POST ${req.params.path}`);
