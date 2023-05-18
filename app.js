@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true})); 
 
 // Create sessions for user logins
-app.use(session({secret:'Secret Value', name: Date.now().toString(16), cookie: {maxAge: 60000}, resave: false, saveUninitialized:false}))
+app.use(session({secret:'Secret Value', name: Date.now().toString(16), cookie: {maxAge: 360000}, resave: false, saveUninitialized:false}))
 
 // Redirect to main page
 app.get('/', (req, res) => {
