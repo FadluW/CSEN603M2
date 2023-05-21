@@ -1,0 +1,16 @@
+<div class="navbar">
+    <a onclick='toggleMenu()' style="padding-top: 5px;"><img src="/Hamburger_icon.svg"></a>
+</div>
+<div id="menuOverlay">
+    <a>Test</a>
+    <a href="/logout" style="bottom: 0;">Log out</a>
+</div>
+
+<script>
+    function toggleMenu() {
+        console.log("toggling")
+        let display = document.getElementById("menuOverlay")?.style?.display;
+        
+        document.getElementById("menuOverlay").style.display = (display == "block") ? "none":"block";
+    }
+</script>

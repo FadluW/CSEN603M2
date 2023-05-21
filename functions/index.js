@@ -1,4 +1,5 @@
 exports.addUser = require('./addUser')
 exports.loginUser = require('./loginUser')
 exports.getAccounts = require('./getAccounts')
+exports.getCards = require('./getCards')
 exports.addAccount = require('./addAccount')

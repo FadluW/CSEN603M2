@@ -40,6 +40,10 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 })
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    return res.redirect('/login');
+})
 
 app.get('/dashboard', (req, res) => {
     // Ensure user logged in
@@ -53,6 +57,7 @@ app.get('/dashboard', (req, res) => {
         case "client": {
             renderOptions.layout = 'clientDash'
             renderOptions.accountsArr = functions.getAccounts(req.session.username)
+            renderOptions.cardsArr = functions.getCards(req.session.username)
             break;
         }
         case "banker": {
@@ -140,6 +145,10 @@ app.post('/:path', (req, res) => {
             req.session.userType = userInfo.userType;
 
             return res.redirect('/dashboard');
+        }
+        case "logout": {
+            req.session.destroy();
+            return res.redirect('/login');
         }
         case "adminAddAccount": {
             try {
