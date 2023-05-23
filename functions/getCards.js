@@ -30,7 +30,6 @@ module.exports =
                 userCards.push({
                     ID: cardNum,
                     balance: Cards[cardNum].balance,
-                    currency: Accounts[accountID].currency,
                     linkedTo: accountID,
                     frozen: Cards[cardNum].frozen
                 })
