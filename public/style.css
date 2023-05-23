@@ -86,6 +86,22 @@ button {
     background-color: #ddd;
     padding: 12px 30px;
     border: 2px solid rebeccapurple;
+    min-width: 520px;
+}
+
+.contNotifs {
+    width: 30vw;
+    min-width: fit-content;
+    overflow-wrap: break-word;
+    display: block;
+    border-radius: 14px;
+    background-color: #ddd;
+    padding: 12px 30px;
+    border: 2px solid rebeccapurple;
+}
+
+.contNotifs .notifs {
+    margin: auto;
 }
 
 .contForm {
@@ -99,7 +115,10 @@ button {
 
 /* The navigation bar */
 .navbar {
-    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 520px;
     background-color: rebeccapurple;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
@@ -124,11 +143,43 @@ button {
     color: black;
 }
 
+#overlayPanel {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    padding-top: 20svh;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(70, 70, 70, 0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#overlayPanelCard {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    padding-top: 20svh;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(70, 70, 70, 0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
 #menuOverlay {
     position: fixed; /* Sit on top of the page content */
     display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: space-between;
     width: 180px; 
-    height: 100%; /* Full height (cover the whole page) */
+    height: (100% - 46px); /* Full height (cover the whole page) */
     top: 46px;
     left: 0;
     bottom: 0;
