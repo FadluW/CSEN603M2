@@ -172,6 +172,10 @@ app.post('/:path', (req, res) => {
         }
     }
 })
+app.post(`/accountDetails/:ID`, (req, res) => {
+    console.log(req.params.ID);
+
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
