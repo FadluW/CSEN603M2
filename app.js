@@ -120,7 +120,7 @@ app.post('/:path', (req, res) => {
     switch(req.params.path) {
         case "register": {
             try {
-                functions.addUser(req.body?.username, req.body?.password);
+                functions.addUser(req.body?.username, req.body?.password, {natID: req.body?.natID});
             } catch (error) {
                 return res.send(error.message)
             }
@@ -150,6 +150,10 @@ app.post('/:path', (req, res) => {
             req.session.destroy();
             return res.redirect('/login');
         }
+        case "reportCard": {
+            functions.repStolenCard(req.body?.cardID, req.body?.repCardMsg);
+            return res.redirect('/dashboard')
+        }
         case "adminAddAccount": {
             try {
                 functions.addAccount(req.body?.username, 'EGP', req.body?.accID)
@@ -167,6 +171,10 @@ app.post('/:path', (req, res) => {
             return res.send(`Error trying to POST ${req.params.path}`);
         }
     }
+})
+app.post(`/accountDetails/:ID`, (req, res) => {
+    console.log(req.params.ID);
+
 })
 
 app.listen(port, () => {

@@ -25,7 +25,6 @@ module.exports =
             userAccounts.push({
                 ID: accountID,
                 balance: Accounts[accountID].balance,
-                currency: Accounts[accountID].currency
             })
         }
 

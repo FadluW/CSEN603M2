@@ -1,0 +1,30 @@
+<div id="overlayPanelCard">
+    <div class="cont">
+        Report Cards Stolen? <br>
+        This will freeze your card and send a request for a new one. <br>
+        <form action="/reportCard" method="post">
+            <input type="text" name="cardID" id="formCardNum" placeholder="Card Number" readonly required> <br>
+            <input type="text" name="repCardMsg" placeholder="Additional Info (optional)"> <br>
+            <button type="submit" formmethod="post" class="buttonLogin">Report</button>
+        </form>
+        <button onclick="toggleReport()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    var currCardID;
+    function toggleReport(cardID) {
+        // Keep hidden if no card ID given
+        if (cardID == undefined) {
+            document.getElementById("overlayPanelCard").style.display = "none";
+            return;
+        }
+
+        currCardID = cardID;
+        document.getElementById("formCardNum").value = cardID;
+
+        let display = document.getElementById("overlayPanelCard")?.style?.display || "none";
+        
+        document.getElementById("overlayPanelCard").style.display = (display == "none") ? "flex":"none";
+    }
+</script>

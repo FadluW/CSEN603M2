@@ -4,12 +4,11 @@ module.exports =
     /**
     * Add a new account linked to a user to the file system database.
     * Throws apropriate errors.
-    * @param {*} username 
-    * @param {*} currency
+    * @param {*} username
     * @param {*} accountNumber assign a specific account number, else randomly generate it (optional)
     * @returns 
     */
-    function (username, currency, accountNumber = "") {
+    function (username, accountNumber = "") {
         // Import DB
         const Users = JSON.parse(fs.readFileSync(`./localDB/users.json`)) 
         const Accounts = JSON.parse(fs.readFileSync(`./localDB/accounts.json`))
@@ -29,8 +28,9 @@ module.exports =
         // Add account to accounts database
         Accounts[accountNumber] = {
             balance: 0,
-            currency: currency,
-            cards: []
+            cards: [],
+            transactions: [],
+            natID: Users[username].natID
         }
         fs.writeFile(`./localDB/accounts.json`, JSON.stringify(Accounts), 'utf8', (err) => {
             if (err) {

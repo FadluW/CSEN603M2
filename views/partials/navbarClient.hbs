@@ -1,16 +1,43 @@
 <div class="navbar">
     <a onclick='toggleMenu()' style="padding-top: 5px;"><img src="/Hamburger_icon.svg"></a>
+    <a href="/dashboard">United Bank of Trust</a>
+    <a onclick="toggleNotifs()">Bell Icon</a>
 </div>
 <div id="menuOverlay">
-    <a>Test</a>
-    <a href="/logout" style="bottom: 0;">Log out</a>
+    {{!-- Top --}}
+    <div>
+        <a>Test</a>
+        <a>Test 2</a>
+    </div>
+    {{!-- Bottom --}}
+    <div>
+        <a href="/logout">Log out</a>
+    </div>
+</div>
+
+<div id="overlayPanel" onclick="toggleNotifs()">
+    <div class="contNotifs">
+        <section class="notifs">
+            Notifs here
+        </section>
+    </div>
+    <div style="margin-top: 20px;">
+        <form action="" method="post">
+            <button type="submit" formmethod="post" class="buttonLogin">Clear</button>
+        </form>
+    </div>
 </div>
 
 <script>
     function toggleMenu() {
-        console.log("toggling")
-        let display = document.getElementById("menuOverlay")?.style?.display;
+        let display = document.getElementById("menuOverlay")?.style?.display || "none";
         
-        document.getElementById("menuOverlay").style.display = (display == "block") ? "none":"block";
+        document.getElementById("menuOverlay").style.display = (display == "none") ? "flex":"none";
+    }
+
+    function toggleNotifs() {
+        let display = document.getElementById("overlayPanel")?.style?.display || "none";
+        
+        document.getElementById("overlayPanel").style.display = (display == "none") ? "flex":"none";
     }
 </script>
