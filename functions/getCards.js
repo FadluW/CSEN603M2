@@ -31,6 +31,7 @@ module.exports =
                     ID: cardNum,
                     balance: Cards[cardNum].balance,
                     linkedTo: accountID,
+                    points: Cards[cardNum].points ?? 0,
                     frozen: Cards[cardNum].frozen
                 })
             }

@@ -33,7 +33,8 @@ module.exports =
 
         CardReqs[cardID] = {
             message: repMsg,
-            reportedOn: Date.now()
+            reportedOn: Date.now(),
+            resolved: false
         }
         fs.writeFile(`./localDB/cardStolenRequests.json`, JSON.stringify(CardReqs), 'utf8', (err) => {
             if (err) {
