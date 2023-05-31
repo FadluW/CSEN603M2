@@ -2,10 +2,10 @@ const fs = require('fs');
 
 module.exports = 
     /**
-    * Add a new account linked to a user to the file system database.
+    * Sends request to close and account and temporarily remove from user who owns it
     * Throws apropriate errors.
     * @param {*} username
-    * @param {*} accountNumber assign a specific account number, else randomly generate it (optional)
+    * @param {*} accountNumber account number to be closed
     * @returns 
     */
     function (username, accountNumber) {
@@ -18,6 +18,11 @@ module.exports =
             throw new Error(`Username ${username} is not registered`);
         }
 
+        // Ensure if client, they own the account
+        if (Users[username].userType == "client" && !Users[username].accountIDs.includes(accountNumber)) {
+            throw new Error(`Cannot close an account you do not own.`)
+        }
+
         // Ensure user has more than one account
         if (Users[username].accountIDs.length < 2) {
             throw new Error("You have to have at least one account left open.")
@@ -25,12 +30,24 @@ module.exports =
 
         // Generate request object
         let randReqID = Date.now().toString(16);
-        Requests.account[randReqID] = {
+        Requests.accountClose[randReqID] = {
             username: username,
             accNumber: accountNumber,
             createdOn: Date.now()
         }
 
+        // Remove account temporarily from user
+        let accIndex = Users[username].accountIDs.indexOf(accountNumber);
+        Users[username].accountIDs.splice(accIndex, 1);
+
+        fs.writeFile(`./localDB/users.json`, JSON.stringify(Users), 'utf8', (err) => {
+            if (err) {
+                console.log(err);
+                throw new Error('Failed to save DB')
+            } else {
+                console.log(`Removed account ${accountNumber} from ${username}`)
+            }
+        })
         fs.writeFile(`./localDB/requests.json`, JSON.stringify(Requests), 'utf8', (err) => {
             if (err) {
                 console.log(err);
