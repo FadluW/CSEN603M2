@@ -22,7 +22,9 @@ module.exports =
         if (user == undefined || user?.accountIDs == undefined) {
             return {
                 transactions: cardTransactions,
-                points: card?.points ?? 0
+                points: card?.points ?? 0,
+                balance: card?.balance ?? 0,
+                frozen: card?.frozen ?? true
             } 
         }
 
@@ -37,13 +39,17 @@ module.exports =
         if (account == undefined || account?.transIDs == undefined) {
             return {
                 transactions: cardTransactions,
-                points: card?.points ?? 0
+                points: card?.points ?? 0,
+                balance: card?.balance ?? 0,
+                frozen: card?.frozen ?? true
             } 
         }
         if (card == undefined || card?.transIDs == undefined) {
             return {
                 transactions: cardTransactions,
-                points: card?.points ?? 0
+                points: card?.points ?? 0,
+                balance: card?.balance ?? 0,
+                frozen: card?.frozen ?? true
             } 
         }
 
@@ -69,6 +75,8 @@ module.exports =
         }
         return {
             transactions: cardTransactions,
-            points: card?.points ?? 0
+            points: card?.points ?? 0,
+            balance: card?.balance ?? 0,
+            frozen: card?.frozen ?? true
         } 
     }

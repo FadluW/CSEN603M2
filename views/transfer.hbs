@@ -1,0 +1,30 @@
+
+<div class="contForm" style="margin: auto;">
+    <form action="/transfer/account" method="post">
+        <label for='sendingAcc'>Sending Account</label>
+        <select id='sendingAcc' name="sendingAcc" required>
+            <option value=""  selected disabled>Choose Account</option>
+            {{#each accountsArr}}
+                {{!-- Add option --}}
+                <option value="{{this.ID}}">{{this.ID}} <br> Bal: {{this.balance}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <label for="recieveAcc">Recieving Account (IBAN if not internal)</label>
+        <input type="text" name="recieveAcc" id="recieveAcc" required>
+        <br>
+        <label for='transType'>Transaction Type</label>
+        <select id='transType' name="transType" required>
+            <option value=""  selected disabled>Choose Account</option>
+            <option value="internal">Internal</option>
+            <option value="domestic">Domestic</option>
+            <option value="international">International</option>
+        </select>
+        <br>
+        <label for="amount">Amount to Transfer</label>
+        <input type="text" name="amount" id="amount" required>
+        <label for="details">Description of Transfer</label>
+        <input type="text" name="details" id="details" required>
+        <button type="submit" class="buttonLogin">Transfer</button>
+    </form>
+</div>

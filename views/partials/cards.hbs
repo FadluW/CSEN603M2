@@ -13,8 +13,10 @@
                 <td style="text-align: right;">{{this.linkedTo}}</td>
                 <td style="text-align: right;">{{this.balance}}</td>
                 <td style="vertical-align:baseline">
-                    <button type="submit" formmethod="post" class="buttonSmall" formaction="/viewCard">VIEW</button>
-                    <button type="submit" onclick="toggleReport({{this.ID}})" class="buttonSmall" disabled={{this.frozen}}>REPORT</button>
+                    <a href="/cardDetails?card={{this.ID}}">
+                        <button class="buttonSmall">VIEW</button>
+                    </a>
+                    <button type="submit" onclick="toggleReport({{this.ID}}, {{this.frozen}})" class="buttonSmall">REPORT</button>
                 </td>
             </tr>
         {{/each}}

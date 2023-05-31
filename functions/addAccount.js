@@ -20,7 +20,7 @@ module.exports =
 
         // Randomly generate account number if not given, check if it exists if given
         if (accountNumber == "") {
-            // TODO: random gen
+            accountNumber = "9200" + Date.now().toString().substring(5,12);
         } else if (Accounts[accountNumber] != undefined) {
             throw new Error(`Account with this number already exists`)
         }
@@ -29,7 +29,7 @@ module.exports =
         Accounts[accountNumber] = {
             balance: 0,
             cards: [],
-            transactions: [],
+            transIDs: [],
             natID: Users[username].natID
         }
         fs.writeFile(`./localDB/accounts.json`, JSON.stringify(Accounts), 'utf8', (err) => {

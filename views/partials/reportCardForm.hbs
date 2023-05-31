@@ -11,20 +11,32 @@
     </div>
 </div>
 
+<div id="overlayPanelCardDis">
+    <div class="cont">
+        Card Already Reported <br>
+        An employee will shortly handle your request <br>
+        <button onclick="toggleReport()">Close</button>
+    </div>
+</div>
+
 <script>
-    var currCardID;
-    function toggleReport(cardID) {
+    function toggleReport(cardID, disabled) {
         // Keep hidden if no card ID given
         if (cardID == undefined) {
             document.getElementById("overlayPanelCard").style.display = "none";
+            document.getElementById("overlayPanelCardDis").style.display = "none";
             return;
         }
 
-        currCardID = cardID;
-        document.getElementById("formCardNum").value = cardID;
+        if (disabled) {
+            let display = document.getElementById("overlayPanelCardDis")?.style?.display || "none";
+            document.getElementById("overlayPanelCardDis").style.display = (display == "none") ? "flex":"none";
+        } else {
+            document.getElementById("formCardNum").value = cardID;
 
-        let display = document.getElementById("overlayPanelCard")?.style?.display || "none";
-        
-        document.getElementById("overlayPanelCard").style.display = (display == "none") ? "flex":"none";
+            let display = document.getElementById("overlayPanelCard")?.style?.display || "none";
+            
+            document.getElementById("overlayPanelCard").style.display = (display == "none") ? "flex":"none";
+        }
     }
 </script>

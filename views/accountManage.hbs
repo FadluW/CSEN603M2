@@ -1,0 +1,22 @@
+<div class="cont">
+    Open Account <br>
+    <form action="/openAccount" method="post">
+        <button type="submit">Request</button>
+    </form>
+</div>
+<br>
+<div class="cont">
+    Close Account
+    <form action="closeAccount" method="post">
+        <label for='closeAcc'>Account Number</label> <br>
+        <select id='closeAcc' name="closeAcc" required>
+            <option selected disabled>Choose Account</option>
+            {{#each accountsArr}}
+                {{!-- Add option --}}
+                <option value="{{this.ID}}">{{this.ID}} </option>
+            {{/each}}
+        </select>
+        <br>
+        <button type="submit">Request to Close</button>
+    </form>
+</div>

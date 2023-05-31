@@ -11,9 +11,9 @@
                 <td style="text-align: left;">{{this.ID}}</td>
                 <td style="text-align: right;">{{this.balance}}</td>
                 <td style="vertical-align:baseline">
-                    <form method="POST" action="/accountDetails/{{this.ID}}">
-                        <button type="submit" formmethod="post" class="buttonSmall">VIEW</button>
-                    </form>
+                <a href="/accountDetails?account={{this.ID}}">
+                    <button class="buttonSmall">VIEW</button>
+                </a>
                 </td>
             </tr>
         {{/each}}

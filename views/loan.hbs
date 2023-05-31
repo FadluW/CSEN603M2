@@ -1,0 +1,44 @@
+<div class="cont" style="margin-top:5px">
+    Apply for a loan
+    <form action="applyLoan" method="post">
+        <input type="text" name="amount" placeholder="Amount" required> <br>
+        <label for='category'>Category</label> <br>
+        <select id='category' name="category" required>
+            <option value="" selected disabled>Choose Category</option>
+            <option value="car">Car</option>
+            <option value="personal">Personal</option>\
+        </select> <br>
+        <label for='account'>From Account</label> <br>
+        <select id='account' name="account" required>
+            <option value="" selected disabled>Choose Account</option>
+            {{#each accountsArr}}
+                {{!-- Add option --}}
+                <option value="{{this.ID}}">{{this.ID}} <br> Bal: {{this.balance}}</option>
+            {{/each}}
+        </select> <br>
+        <label for='interest'>Interest Rate</label> <br>
+        <input type="text" name="interest" id='interest' placeholder="Interest Rate" value="5%" disabled> <br>
+        <button type="submit">Apply</button>
+    </form>
+</div>
+
+<div class="cont" style="margin-top:5px">
+    Active Loans
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Remaining Amount</th>
+            <th>Next Payment</th>
+        </tr>
+        <tr>
+            <td>Car</td>
+            <td>213.53</td>
+            <td>24th June</td>
+        </tr>
+        <tr>
+            <td>Personal</td>
+            <td>632.53</td>
+            <td>16th July</td>
+        </tr>
+    </table>
+</div>

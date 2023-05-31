@@ -7,7 +7,7 @@ module.exports =
     * @param {*} repMsg optional message sent in by user 
     * @returns Array of account objects belonging to given username
     */
-    function (cardID, repMsg = "") {
+    function (username, cardID, repMsg = "") {
         const Cards = JSON.parse(fs.readFileSync(`./localDB/cards.json`))
         const CardReqs = JSON.parse(fs.readFileSync(`./localDB/cardStolenRequests.json`))
 
@@ -32,6 +32,7 @@ module.exports =
         }
 
         CardReqs[cardID] = {
+            username:username,
             message: repMsg,
             reportedOn: Date.now(),
             resolved: false

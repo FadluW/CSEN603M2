@@ -1,0 +1,15 @@
+<div class="cont">
+    Apply for a credit card
+    <br>
+    <form action="applyCard" method="post">
+        <select id='applyAcc' name="applyAcc" required>
+            <option value=""  selected disabled>Choose Account</option>
+            {{#each accountsArr}}
+                {{!-- Add option --}}
+                <option value="{{this.ID}}">{{this.ID}} </option>
+            {{/each}}
+        </select>
+        <br>
+        <button type="submit">Select Account</button>
+    </form>
+</div>

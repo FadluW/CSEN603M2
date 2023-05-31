@@ -14,8 +14,8 @@ module.exports =
         const Accounts = JSON.parse(fs.readFileSync(`./localDB/accounts.json`))
         const Requests = JSON.parse(fs.readFileSync(`./localDB/requests.json`))
 
-        const username = Requests.account[reqID]?.username;
-        const accountNumber = Requests.account[reqID]?.accNumber;
+        const username = Requests.accountClose[reqID]?.username;
+        const accountNumber = Requests.accountClose[reqID]?.accNumber;
    
         // Ensure user exists
         if (Users[username] == undefined) {
@@ -35,6 +35,8 @@ module.exports =
 
                 Accounts[curr].balance += Accounts[accountNumber].balance;
                 Accounts[curr].cards.push(...Accounts[accountNumber].cards);
+
+                break;
             }
         }
 

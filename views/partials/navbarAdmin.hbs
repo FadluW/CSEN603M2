@@ -3,7 +3,6 @@
     <a href="/dashboard">United Bank of Trust</a>
     <a onclick="toggleNotifs()">Bell Icon</a>
 </div>
-
 {{#each errorArr}}
     <script>
         alert("{{this}}");
@@ -18,18 +17,12 @@
 <div id="menuOverlay">
     {{!-- Top --}}
     <div>
-        <p>Accounts</p>
-        <a href="/accountManage">Open/Close Account</a>
-        <a href="/transfer">Transfer Money</a>
-        <a href="/loan">Apply for a loan</a>
-        <p>Cards</p>
-        <a href="/applyCard">Apply for a card</a>
-        <p>Utilities</p>
-        <a href="/utilities">Manage Utilities</a>
+        <p>General</p>
+        <a href="/sendAnnouncement">Send an Announcement</a>
     </div>
     {{!-- Bottom --}}
     <div>
-        <a href="reportTech">Report an Issue</a>
+        <a href="resolveTech">Resolve Issues</a>
         <a href="/logout">Log out</a>
     </div>
 </div>

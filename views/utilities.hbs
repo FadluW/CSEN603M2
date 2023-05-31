@@ -1,0 +1,64 @@
+<div class="cont" style="margin-top: 5px;">
+    Active Reminders
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        <tr>
+            <td>Water</td>
+            <td>213.53</td>
+            <td>24th June</td>
+        </tr>
+        <tr>
+            <td>Electricity</td>
+            <td>632.53</td>
+            <td>16th July</td>
+        </tr>
+    </table>
+</div>
+<div class="cont" style="margin-top: 5px;">
+    Add Reminder
+    <form action="/addReminder" method="post">
+        <label for='remCat'>Category</label> <br>
+        <select id='remCat' name="remCat" required>
+            <option value="" selected disabled>Choose Category</option>
+            <option value="gas">Gas</option>
+            <option value="electricity">Electricity</option>
+            <option value="water">Water</option>
+            <option value="telephone">Telephone</option>
+        </select>
+        <br>
+        <input type="number" name="remAmount" placeholder="Amount">
+        <input type="date" name="remDate">
+        <br>
+        <button type="submit">Add</button>
+    </form>
+</div>
+<div class="cont" style="margin-top: 5px;">
+    Pay Utilities
+    <form action="/payUtil" method="post">
+        <label for='payCat'>Category</label> <br>
+        <select id='payCat' name="payCat" required>
+            <option value="" selected disabled>Choose Category</option>
+            <option value="gas">Gas</option>
+            <option value="electricity">Electricity</option>
+            <option value="water">Water</option>
+            <option value="telephone">Telephone</option>
+        </select>
+        <br>
+        <label for='payAcc'>From Account</label> <br>
+        <select id='payAcc' name="payAcc" required>
+            <option value="" selected disabled>Choose Account</option>
+            {{#each accountsArr}}
+                {{!-- Add option --}}
+                <option value="{{this.ID}}">{{this.ID}} <br> Bal: {{this.balance}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <input type="number" name="payAmount" placeholder="Amount">
+        <br>
+        <button type="submit">Pay</button>
+    </form>
+</div>

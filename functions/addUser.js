@@ -34,7 +34,8 @@ module.exports =
         Users[username] = {
            password: password,
            createdOn: Date.now(),
-           type: userType
+           type: userType,
+           notifs: []
         }
         // If client check if already owns accounts
         if (userType == "client") {

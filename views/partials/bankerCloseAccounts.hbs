@@ -1,0 +1,34 @@
+<div class="cont" style="margin-top: 5px;">
+    Close Account Requests
+    <table>
+        <tr>
+            <th style="text-align: left;">Username</th>
+            <th style="text-align: left;">Account Number</th>
+            <th style="width: 20%; text-align: right">View User Accounts</th>
+            <th style="width: 92px">.</th>
+        </tr>
+        {{!-- Iterate over each account --}}
+        {{#each accountCloseArr}}
+            <tr>
+                <td style="text-align: left;">{{this.username}}</td>
+                <td style="text-align: left;">{{this.accNumber}}</td>
+                <td style="vertical-align:baseline">
+                    <a href="/accounts?user={{this.username}}">
+                        <button class="buttonSmall">VIEW</button>
+                    </a>
+                    <a href="/accountDetails?account={{this.accNumber}}">
+                        <button class="buttonSmall">VIEW ACCOUNT</button>
+                    </a>
+                </td>
+                <td style="vertical-align:baseline">
+                    <form action="/closeAccount/{{@key}}" method="post">
+                        <button class="buttonSmall" type="submit">ACCEPT</button>
+                    </form>
+                    <form action="/removeReq/{{@key}}/accountClose" method="post">
+                        <button class="buttonSmall" type="submit">REJECT</button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
