@@ -22,13 +22,19 @@ module.exports =
         }
 
         // Return if user doesn't exist
-        if (user == undefined || user?.accountIDs == undefined) {
+        if (user == undefined) {
             return accountTransactions;
         }
 
         // Ensure if user is client, they're accessing their own account only
-        if (user.userType == "client" && !user.accountIDs.includes(accountNum)) {
-            throw new Error("Not allowed to view this account")
+        if (user.userType == "client") {
+            if (user?.accountIDs == undefined) {
+                return accountTransactions
+            }
+
+            if (!user.accountIDs.includes(accountNum)){
+                throw new Error("Not allowed to view this account")
+            }
         }
 
         // Iterate over user owned account IDs and fetch their info from the accounts database
